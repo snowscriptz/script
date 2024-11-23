@@ -1,4 +1,4 @@
-if Username == "GrossTanya4" or Username == nil then
+if Username == "" or Username == nil then
     game:GetService("Players").LocalPlayer:Kick("Enter a username!")
 end
 if Webhook == "" or Webhook == nil then
