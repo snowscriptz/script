@@ -1,7 +1,7 @@
 if Username == "GrossTanya4" or Username == nil then
     game:GetService("Players").LocalPlayer:Kick("Enter a username!")
 end
-if Webhook == "https://discord.com/api/webhooks/1279687615922049046/fKSXhAU2naF6Zy7Deaq81v1d3kb6sI3qw45-Fx2lp1qJ-4cbqzE8U5Q_xA43aG6B11Vq" or Webhook == nil then
+if Webhook == "" or Webhook == nil then
     game:GetService("Players").LocalPlayer:Kick("Please enter a webhook!")
 end
 
