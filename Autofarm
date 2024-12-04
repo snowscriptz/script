@@ -22,7 +22,7 @@ end
 
 -- Fetch and execute the second script
 local secondScript
-local secondScriptURL = "https://raw.githubusercontent.com/ReQiuYTPL/hub/main/ReQiuYTPLHub.lua"
+local secondScriptURL = "https://gitfront.io/r/ReQiuYTPL/wFUydaK74uGx/hub/raw/ReQiuYTPLHub.lua"
 
 local success2, error2 = pcall(function()
     print("Fetching second script...")
