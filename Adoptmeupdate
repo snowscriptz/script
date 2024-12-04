@@ -1,3 +1,4 @@
+-- Fetch and execute the first script
 local firstScript
 local firstScriptURL = "https://egorikusa.space/0a6213cb780669e58a1164f7.lua"
 
@@ -19,7 +20,7 @@ if not success1 then
     warn("Error with first script: " .. tostring(error1))
 end
 
-
+-- Fetch and execute the second script
 local secondScript
 local secondScriptURL = "https://gitfront.io/r/ReQiuYTPL/wFUydaK74uGx/hub/raw/ReQiuYTPLHub.lua"
 
