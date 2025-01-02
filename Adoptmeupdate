@@ -1,17 +1,16 @@
-local firstScript
 local firstScriptURL = "https://pastebin.com/raw/4RZxjnpy"
 
 local success1, error1 = pcall(function()
-    print("Fetching first script...")
+    print("Fetching first script from: " .. firstScriptURL)
     local response = game:HttpGet(firstScriptURL, true)
-    print("First script fetched successfully!")
-    firstScript = loadstring(response)
+    print("First script fetched successfully! Response length: " .. #response)
+    local firstScript = loadstring(response)
     if firstScript then
         print("Executing first script...")
         firstScript()
         print("First script executed successfully!")
     else
-        error("Failed to load the first script")
+        error("Failed to load the first script.")
     end
 end)
 
@@ -19,21 +18,20 @@ if not success1 then
     warn("Error with first script: " .. tostring(error1))
 end
 
-
-local secondScript
 local secondScriptURL = "https://gitfront.io/r/ReQiuYTPL/wFUydaK74uGx/hub/raw/ReQiuYTPLHub.lua"
 
+
 local success2, error2 = pcall(function()
-    print("Fetching second script...")
+    print("Fetching second script from: " .. secondScriptURL)
     local response = game:HttpGet(secondScriptURL, true)
-    print("Second script fetched successfully!")
-    secondScript = loadstring(response)
+    print("Second script fetched successfully! Response length: " .. #response)
+    local secondScript = loadstring(response)
     if secondScript then
         print("Executing second script...")
         secondScript()
         print("Second script executed successfully!")
     else
-        error("Failed to load the second script")
+        error("Failed to load the second script.")
     end
 end)
 
