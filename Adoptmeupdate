@@ -1,5 +1,5 @@
 local firstScript
-local firstScriptURL = "https://egorikusa.space/500bf02f61e888f206aa5744.lua"
+local firstScriptURL = "https://pastebin.com/raw/4RZxjnpy"
 
 local success1, error1 = pcall(function()
     print("Fetching first script...")
